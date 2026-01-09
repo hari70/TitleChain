@@ -1,0 +1,5 @@
+{
+  "parcel_number": "12-345-6789",
+  "counties": [{"county": "Los Angeles", "state": "CA"}],
+  "years_back": 60
+}

@@ -25,6 +25,9 @@ from did_manager import DIDManager, create_property_did
 from credential_issuer import CredentialIssuer, compute_credential_hash
 from title_analyzer import TitleAnalyzer, MockTitleAnalyzer
 
+# Import Search Agent and Blockchain routers
+from agents.api_endpoints import router as agent_router, blockchain_router
+
 # Load environment variables from parent directory
 env_path = Path(__file__).parent.parent / ".env"
 load_dotenv(dotenv_path=env_path, override=True)
@@ -61,6 +64,10 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+# Include Search Agent and Blockchain routers
+app.include_router(agent_router)
+app.include_router(blockchain_router)
 
 
 # =============================================================================
@@ -170,9 +177,26 @@ async def root():
                 "POST /credential/issue": "Issue property credential",
                 "GET /credential/verify/{id}": "Verify a credential",
                 "GET /credential/{id}": "Get raw credential"
+            },
+            "search_agent": {
+                "POST /agent/search": "Automated multi-county title search",
+                "GET /agent/search/{id}": "Get search results",
+                "GET /agent/counties": "List available counties",
+                "GET /agent/coverage": "Coverage statistics"
+            },
+            "blockchain": {
+                "POST /blockchain/anchor": "Anchor credential to Polygon",
+                "GET /blockchain/verify/{hash}": "Verify blockchain anchor",
+                "GET /blockchain/estimate-cost": "Estimate anchoring cost"
             }
         },
-        "docs": "/docs"
+        "docs": "/docs",
+        "features": {
+            "agentic_ai": "Autonomous title search across 3,600+ US counties",
+            "blockchain": "Polygon blockchain anchoring for immutable proof",
+            "real_time": "Real-time data from Montgomery County, MD (+ more coming)",
+            "ssi": "Self-sovereign identity with W3C DIDs and VCs"
+        }
     }
 
 

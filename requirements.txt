@@ -32,13 +32,15 @@ python-dotenv==1.0.0
 # asyncpg==0.29.0
 # alembic==1.13.1
 
-# Graph processing (future)
-# networkx==3.2.1
-# neo4j==5.16.0
+# Web scraping for county connectors
+beautifulsoup4==4.12.2
 
-# Blockchain (future)
-# web3==6.14.0
-# eth-account==0.10.0
+# Graph processing
+networkx==3.2.1
+
+# Blockchain
+web3==6.14.0
+eth-account==0.11.0
 
 # Testing
 pytest>=7.4.0,<8.0.0
