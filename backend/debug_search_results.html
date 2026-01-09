@@ -1,0 +1,437 @@
+
+
+<!DOCTYPE html>
+
+<html lang="en-us" xmlns="http://www.w3.org/1999/xhtml" style="height: 100%;">
+<head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-266K3ZS590"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+        gtag('config', 'G-266K3ZS590');
+        function SwitchJumpBox() {
+            var upjump = document.getElementById('rdlinepart_UpdateJumpNew');
+            if (upjump.style.display == "none") {
+                upjump.style.display = "block";
+            } else {
+                upjump.style.display = "none";
+            }
+            //var jumpbox = document.getElementById('divjumpbox');
+            //if (jumpbox.style.display == "none") {
+            //    jumpbox.style.display = "flex";
+            //} else {
+            //    jumpbox.style.display = "none";
+            //}
+        }
+
+        function opennewtab(url) {
+            //var upjump = document.getElementById('rdlinepart_UpdateJumpNew');
+            //upjump.style.display = "none";
+            window.open(url, '_blank');
+        }
+
+
+        //$(document).on("click", "#rdlinepart_btnJumpClearBox", function () {
+        //    var clerk = document.getElementById("rdlinepart_tbNewClerk");
+        //    var book = document.getElementById("rdlinepart_tbNewBook");
+        //    var page = document.getElementById("rdlinepart_tbNewPage");
+        //    clerk.text = "";
+        //    book.text = "";
+        //    page.text = "";
+
+        //}
+
+
+
+        
+    </script>
+     
+
+
+
+   
+
+
+    <meta charset="utf-8" /><meta http-equiv="X-UA-Compatible" content="IE=edge" /><meta name="viewport" content="width=device-width, initial-scale=1.0" /><title>
+	MDLandRec: Home Page
+</title><link rel="preload" as="style" href="../Styles/accounts.css" /><link rel="preload" as="style" href="../Styles/home.css" /><link rel="preload" as="style" href="../Styles/search.css" /><link href="../Styles/accounts.css" media="screen" rel="stylesheet" type="text/css" /><link href="../Styles/home.css" media="screen" rel="stylesheet" type="text/css" /><link href="../Styles/search.css" media="screen" rel="stylesheet" type="text/css" /><link href="../Styles/accounts.css" media="print" rel="stylesheet" type="text/css" /><link href="../Styles/home.css" media="print" rel="stylesheet" type="text/css" /><link href="../Styles/search.css" media="print" rel="stylesheet" type="text/css" />
+
+    <style>
+        .jumpnewbox{
+            color: red;
+            border: solid 1px;
+            padding: 20px;
+            max-width: 500px;
+            margin: 15px 0px 10px 20px;
+        }
+        .jumpnewbox-each{
+           /* width:160px;
+            padding-right:20px;*/
+            width:130px;
+
+        }
+
+        #body_iframecell {
+            width: 70%;
+        }
+
+        #body_platinfocell {
+            width: 30%;
+        }
+
+        .guidehtml ul {
+            margin-left: 15px;
+        }
+
+        .guidehtml td {
+            padding: 20px;
+        }
+
+
+        @media screen and (max-device-width:480px) {
+            #body_iframecell {
+                display: block;
+                width: 100%;
+            }
+
+            #body_minimizercell {
+                display: none;
+            }
+
+            #body_platinfocell {
+                display: block;
+                width: 100%;
+            }
+        }
+
+        @media handheld {
+            #body_iframecell {
+                display: block;
+                width: 100%;
+            }
+
+            #body_minimizercell {
+                display: none;
+            }
+
+            #body_platinfocell {
+                display: block;
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div id="container">
+
+        <script type="text/javascript" src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.6.0.min.js"></script>
+        <script type="text/javascript">
+            window.onpageshow = function (event) {
+                if (event.persisted) {
+                    window.location.reload();
+                }
+            };
+
+
+
+            $(document).ready(function () {
+                try {
+                    var Wtitle = document.getElementById("top_mdlandrecHeader").offsetWidth + 40;
+                    if (Wtitle > 500) {
+                        document.getElementById("form1").style.minWidth = Wtitle + "px";
+                        document.getElementById("Footer").style.minWidth = Wtitle + "px";
+                        document.getElementById("overlayer").style.minWidth = Wtitle + "px";
+
+                    }
+                } catch {
+
+                }
+            });
+
+            function loading() {
+                document.getElementById('body_gridcontrols').style.position = 'static';
+                document.getElementById('body_bottomcontrols').style.position = 'static';
+                document.getElementById('body_btnBack').style.display = 'none';
+                document.getElementById('body_btnprint').style.display = 'none';
+                document.getElementById('body_btnBack2').style.display = 'none';
+                document.getElementById('body_btnprint2').style.display = 'none';
+            }
+        </script>
+
+        <div id="wrapper" class="wrapper">
+            <form method="post" action="./Login.aspx" id="form1" autocomplete="off">
+<input type="hidden" name="__VIEWSTATE" id="__VIEWSTATE" value="yfCY2kSzVaXDmCOrw5iUusUCpsjzSBUR+ukiCD4vplzkB5ta/gKRwNSeotNmVescQWzDIhYD2AZHUZ5e+34BFEO/mFK+3kIYxN7Isl9gHJXu44i8hPUQh0coj75ZnjfFTqKqrbmQL15cDI8z9RCkDjLDgREssglrXnR3yhtl5bwHDvYqK72zsWmYEOgLfNezrjyQdOgxpOLEFlaSJg5RCGVJMawg/adgn72p+YrjbwYoz9iuC6akfcrddGSOXxd6QQ2lcM48i9K/K+dg0yQ7EAF7zk6k2pCWyQ4qEIGM3vw1/SDhhZjfjGBRykXuLUtnBfsNVv22/BsNkAP+M+KA3Be0VJY6d8DWt1+kTS0yyLlo0WtB8LxzYbe+ocVmLRgT6WEspCmkomC4SsdVn/Vf9lPZoesElj7/2rs+qgwSWGRhuiNmaDXNtV7YGJx0ivfZmDp/8umgQZfXSFRPlkXAizR4/BypO4aaW9FRgp11VEpKf7reY7PzJo9vEWKUl+T98/GQlYyWdNpo2pu171yZhmWor0GiR2TK6vtTmP5Pah1jcMTqfWlB2HesFdXFRG+qQRnFJM0rX4nd1OKhoc4FGBqVSwL321Hj1qcXezWn8R4omxmzGNRtj8mMS+esu3dnA0IHLX59Te0p10v6jwQvMAZfbVh/7wYaPSaEV1+6IpdmDjBQ8ITY4OZzrdbIZyTsXy/7qKQHqMjSWHKds/R4V/9MSv+HfQLOkvdwsrXPwDg5crK3K7j8oIpYpmlwZlQmkwHRT/h0t5rip71q+0wuFkNU/plRsv8LtcDw9yNO0lwDsv3YoHdOGKZ4mFAP+fcGyGwZaw+sCHruISeR6ptqk/tk7qwlTVxKWq2IrzJBNW82pGT4CAFiwVvftia0r2uxScsf1o2fdbFyhBljIkNmnUyUufFPTd4YrOFKNsw2UeAGExu13Oz6Ilo4XvUaG2KoJ0H/rzFKbG7Hx72qxH50NCTXvcmuTuD49VE0atSHteN0yi1iLJ1NHosbxPrJ2ixPToRDAJyi2lFaLnnp+OlsSFGN01z/9Tvg4e/gh1s2nGz2oDnpDV6vdnoN3ZA1LxsWijqtSeDsqFGpSeYVv9pcnbq9/jfhHvC4/ofcAYCfHhQhu1oNBfDaEINCOxGtbc3xsOOCOVFTwr2/bLPl3StTIt69Mu6aX1e//DXqtA9tSJSFwfG2kqZ94AXayxQTh0i9QTsndASmZAuWMW2kyMGBtnc8td8QX5oEfkcsDKd/369PRPfN5koTVmcy/DwG/PULKAuMuFtWF8KndpAjHf8SqdGw/mkZr4QPWRB+PNqgZU+t1zzS3AjFQ6wW56XTjSwcffbmtmWpDd8Mu+89bv2+EFYw2WcIE96RtR5lpSc2J6jqOqzFRXqjbDt+JSxfu6ZB1aDnisU4E29gcCPORTXGxkRVZ2tj5CVqkvOeXhzhV+6SLyw3A7NW7uUP3qXxVyG3FDeJXbzu7WwhCNNy3RczTQ==" />
+
+
+<script src="/ScriptResource.axd?d=NJmAwtEo3Ipnlaxl6CMhvkFH7-YNtvx4ipMZ93uwibHcKQlS4hLqSMNfVfMeTIp0DQ2LWEt_jBBQrvdMma_vNwXLz0in0UCOepEFy9duaL_6aXgPbZ2PUWvIJzBeJ5li_xraiUPaDkMbSfkkZFHCgYD0au-YxXznFTUvis9ZSTk1&amp;t=5c0e0825" type="text/javascript"></script>
+<script src="/ScriptResource.axd?d=Xz2vUBiw-iW_eTyhK3lS4VVtE5Cn8y_fmzE-iNHm_3Q4hspd46rpTnNTtS8DCN5IrviwZRydKU5fuPb0wWadqP7zPalXlJkxns1w2lGJi6N2RqNESDWLawHsfpcRPtW7iW2WXnx02rivnHyF7EWPizp-ulK_C7-fnNp3ilJQaNY1&amp;t=5c0e0825" type="text/javascript"></script>
+<input type="hidden" name="__VIEWSTATEGENERATOR" id="__VIEWSTATEGENERATOR" value="D44F3332" />
+<input type="hidden" name="__EVENTVALIDATION" id="__EVENTVALIDATION" value="OWpc6xfcFSs9N8jDwi9aZkXTknEz369m0FXgQg8nn0z7zU0pmsFBrOT+O5+2Y+yqgYpvuqmPebKGBxMOAqJLTAh8RIv6GdBkSg0UMOI4on0rtUZvfUyfpEJaT4BPuiOGeTA0l9TU654xvl1f7NIVAsy2VkKI/HkMXp+DRvSCMT+eb0iKZKm4QTRVKX9uBceUjMd3XOzqnxxpWwxz3U41NHhrsvAUGnC1DLiy7ujW1YFi64aZfKo9u6JZPjU0Ln3P8arqOIsgM7xt/kb+2s5FTO7KL71LIxAeIIqYG2PzyLc36B4TSQvEIramfHaCRWJeARA3AIlvMTRv7V+5Mfk6gg==" />
+                
+
+                    
+                    
+                    
+
+
+
+                    
+
+
+
+                    
+
+                    <table id="top_defaulttop" class="countyHeader" cellspacing="0" cellpadding="0" width="100%">
+	<tr id="top_tb1" bgcolor="#26354A">
+		<td id="top_CountyImg" class="logo" align="center"><img id="top_ImageCounty" tabindex="-1" src="../images/seals/mdsc.gif" alt="Maryland State Archives seal" height="120" /></td><td id="top_CountyInfo" class="logo"><span id="top_countydetail" tabindex="-1">MDLandRec<br><span class='clerkname'>The Digital Repository for Land Records</span>
+                                        <br><span class='tagline'
+                                        <br>Created and verified by the Clerks of the Circuit Courts
+                                        <br>Presented by the Maryland State Archives<br><br><br>
+                                        <a href='https://msa.maryland.gov' target='_blank'>msa.maryland.gov</a></span><br></span></td>
+	</tr>
+</table>
+
+
+
+                
+
+
+                
+                    <div id="rdline" width="100%" class="rdlinecss">
+                        
+                            <div id="rdlinepart_dropdownbar_dsearch" style="display:inline;">
+                                &nbsp|&nbsp <a href="../Pages/Search.aspx" tabindex="-1">HOME</a>
+                            </div>
+                            <div id="rdlinepart_dropdownbar_dindices" style="display:inline;">
+                                &nbsp|&nbsp <a href="../Pages/Indices.aspx" tabindex="-1">INDICES</a>
+                            </div>
+                            <div id="rdlinepart_dropdownbar_djump" style="display:none;font-weight:bold;">
+                                &nbsp|&nbsp <a href="#" tabindex="-1" onclick="SwitchJumpBox()">JUMP TO NEW VOLUME</a>
+                            </div>
+                            <div id="rdlinepart_dropdownbar_drelated" style="display:none;">
+                                &nbsp|&nbsp <a href="../Pages/RelatedLinks.aspx" tabindex="-1">RELATED LINKS</a>
+                            </div>
+                            <div id="rdlinepart_dropdownbar_daccount" style="display:none;">
+                                &nbsp|&nbsp <a href="../Accounts/UserAccount.aspx" tabindex="-1">MY ACCOUNT</a>
+                            </div>
+                            <div id="rdlinepart_dropdownbar_dcreate" style="display:inline;">
+                                &nbsp|&nbsp <a href="../Accounts/NewAccount.aspx" tabindex="-1">CREATE ACCOUNT</a>
+                            </div>
+                            <div id="rdlinepart_dropdownbar_dhelp" style="display:inline;">
+                                &nbsp|&nbsp <a href="../Help/FAQ.aspx" tabindex="-1">HELP</a>
+                            </div>
+                            <div id="rdlinepart_dropdownbar_dcontact" style="display:inline;">
+                                &nbsp|&nbsp <a href="../Pages/Feedback.aspx" tabindex="-1">CONTACT US</a>
+                            </div>
+                            <div id="rdlinepart_dropdownbar_dlogout" style="display:none;">
+                                &nbsp|&nbsp <a href="../Pages/LogOut.aspx" tabindex="-1">LOGOUT</a>
+                            </div>
+                            &nbsp|&nbsp
+                        
+                    </div>
+                    <div>
+                        <div id="rdlinepart_UpdateJumpNew" style="display:none;">
+	
+
+
+                        <div id="divjumpbox"  class="jumpnewbox">
+                            <div style="display: flex" >
+                            <div style="width:145px; padding-right:0px">
+                                <label for="rdlinepart_tbNewClerk" class="labelsearch">Clerk: </label>
+                                <input name="ctl00$rdlinepart$tbNewClerk" type="text" maxlength="6" id="rdlinepart_tbNewClerk" size="4" oninput="this.value = this.value.replace(/[^a-zA-Z]/g, &#39;&#39;)" border="1" />
+                            </div>
+                            <div style="display: inline-table"  class="jumpnewbox-each">
+                                <label for="rdlinepart_tbNewBook" class="labelsearch">Book: </label>
+                                    <input name="ctl00$rdlinepart$tbNewBook" type="text" maxlength="6" id="rdlinepart_tbNewBook" class="required" size="4" title="Please enter a valid book number." oninput="this.value = this.value.replace(/[^a-zA-Z0-9\-\/\,\ ]/g, &#39;&#39;)" border="1" />
+                                <br />
+                                    
+                            </div>
+                            <div style="display: inline-table" class="jumpnewbox-each">
+                                <label for="rdlinepart_tbNewPage" class="labelsearch">Page: </label>
+                                    <input name="ctl00$rdlinepart$tbNewPage" type="text" maxlength="6" id="rdlinepart_tbNewPage" size="4" class="required digits" title="Please enter a valid page number" oninput="this.value = this.value.replace(/[^0-9]/g, &#39;&#39;)" border="1" />
+                                    
+                                    
+                            </div>
+                            <div>
+                                
+                                <input type="submit" name="ctl00$rdlinepart$btnJumptab" value="Jump" onclick="javascript:WebForm_DoPostBackWithOptions(new WebForm_PostBackOptions(&quot;ctl00$rdlinepart$btnJumptab&quot;, &quot;&quot;, true, &quot;jNewGroup&quot;, &quot;&quot;, false, false))" id="rdlinepart_btnJumptab" class="button" />
+                            </div>
+                                <div style="padding-left:5px;">
+                                    <input type="submit" name="ctl00$rdlinepart$btnJumpClearBox" value="Clear" id="rdlinepart_btnJumpClearBox" class="button" />
+                                </div>
+
+                            </div>
+                            <div>
+                                <span><font color="Black"><b>NOTE:</b> Search returns single page.</font></span>
+                            </div>
+                        </div>
+                                                
+</div>
+                                </div>
+                
+
+                <div style="background-color: #D3DCE6; width: 100%;">
+                    <center>
+                        <div style="font-size: 0px;">
+                            
+    <script>
+        function switchpwd() {
+            var pwd = document.getElementById("body_tbPassword")
+            var eyesoff = document.getElementById("body_eyesoff")
+            var eyeson = document.getElementById("body_eyeson")
+            if (pwd.type == "password") {
+                pwd.type = "value"
+                eyesoff.style.display = "none"
+                eyeson.style.display = "inherit"
+            } else {
+                pwd.type = "password"
+                eyesoff.style.display = "inherit"
+                eyeson.style.display = "none"
+            }
+        }
+    </script>
+
+    <style>
+        #body_upsend {
+            display: inline !important;
+        }
+    </style>
+
+    <div style="margin: 10px; margin-top: 0px; min-height: 400px; padding: 5px;">
+        <p class="welcome">MDLandRec</p>
+        <div style="margin: 25px auto; padding: 5px; width: 600px; height: 300px; border: 1px solid; display: none;">
+            <div style="text-align: center; margin: 25% auto;"><b>Plat Image Here</b></div>
+        </div>
+        
+        <div style="text-align: left; margin-top: 10px; margin-bottom: 10px; margin-left: 5%; margin-right: 10%;">
+            <p>
+                <br />
+               For a summary on the changes in the new MDLandRec system, please review our <a href="https://msa.maryland.gov/msa/main/pdf/MDLRFall2025.pdf">Upcoming Changes to Maryland Land Records Website - Fall 2025 Launch</a> page. For additional information on searching, see our new <a href="../Help/GuideForSearching.aspx">MDLandRec Search Guide</a>.
+                <br />
+                <br />
+                Click here to complete the application for a <a href="../Accounts/NewAccount.aspx">new account</a>. If you applied for an account, but did not receive your verification email, please contact the <a href="Feedback.aspx">Archives' Helpdesk</a> or call <a href="tel:410-260-6487" style="text-decoration: none">(410)-260-6487</a>.
+                <br />
+
+            </p>
+            <div style="padding-bottom: 10px; width: 75%;">
+                
+                
+                <fieldset class="jumpsearch">
+                    <legend class="legendsearch">Please Log In</legend>
+                    <p style="font-weight: bold; color: #A51008;" forecolor="#A51008">
+                        Use of this website constitutes acceptance of the <a href="https://msa.maryland.gov/msa/main/html/aup.html" target="_blank" rel="noopener noreferrer">Archive’s Acceptable Use Policy</a> and <a href="../Pages/Terms.aspx">Terms & Conditions</a>.
+
+                    </p>
+
+                    <div id="body_uplogin">
+	
+                            <p>
+                                <span id="body_lblLoginMessage"><b><font color="#990033">* Required Fields</font></b></span>
+                            </p>
+                            <div id="body_divUserlogin" style="display: inline-flex; flex-direction: column; flex-wrap: nowrap; align-items: flex-start;">
+
+                                <div style="display: inline-flex; flex-direction: column; flex-wrap: nowrap; align-items: flex-start;">
+
+                                    <span id="body_lblUsername">Email<span class="required" style="padding-left: 0">*</span></span>
+                                    <input name="ctl00$body$tbUsername" type="text" maxlength="325" id="body_tbUsername" class="login required email" size="35" title="Please enter your username (email address)." />
+                                    &nbsp;
+
+                                </div>
+                                <div style="display: inline-flex; flex-direction: column; flex-wrap: nowrap; align-items: flex-start;">
+                                    <span id="body_lblPassword">Password<span class="required" style="padding-left: 0">*</span></span>
+                                    <input name="ctl00$body$tbPassword" maxlength="30" id="body_tbPassword" class="pwdbox" class="login required" type="password" name="password" size="30" title="Please enter your password." autocomplete="off" />
+                                    
+
+
+
+                                    <span style="padding-left: 265px;" onclick="switchpwd()">
+                                        <img id="body_eyesoff" class="pwdeyesoff" src="../images/eyesoff.png" />
+                                        <img id="body_eyeson" class="pwdeyeson" src="../images/eyeson.png" />
+                                    </span>
+
+
+                                    
+
+                                    &nbsp;
+
+
+                                </div>
+
+
+                                <input type="submit" name="ctl00$body$btnSubmit" value="Submit" onclick="javascript:WebForm_DoPostBackWithOptions(new WebForm_PostBackOptions(&quot;ctl00$body$btnSubmit&quot;, &quot;&quot;, true, &quot;&quot;, &quot;&quot;, false, false))" id="body_btnSubmit" class="loginbutton" />
+                                <br />
+
+                            </div>
+                            <div id="body_divOff" style="display: none">
+                                <span id="body_lbloff">This account has been temporarily suspended. please contact the Archives or your Financial Institution.</span>
+                            </div>
+                            <div id="body_divUsercode" style="display: none">
+                                <span id="body_lblUsercode">An access code has been sent to your email. Please enter the code below:</span></span>
+                                <br />
+                                <input name="ctl00$body$tbUsercode" type="text" maxlength="6" id="body_tbUsercode" oninput="this.value = this.value.replace(/[\s]/g, &#39;&#39;)" />
+
+
+
+                                <div id="body_upsend">
+		
+
+                                        <span id="body_TSend" style="display:none;"></span>
+                                        <input type="submit" name="ctl00$body$btnSendUsercode" value="Email New Access Code" onclick="javascript:WebForm_DoPostBackWithOptions(new WebForm_PostBackOptions(&quot;ctl00$body$btnSendUsercode&quot;, &quot;&quot;, true, &quot;&quot;, &quot;&quot;, false, false))" id="body_btnSendUsercode" class="button" style="color:black;" />
+                                    
+	</div>
+                                <br />
+                                <input type="submit" name="ctl00$body$btnSubUsercode" value="Submit" onclick="javascript:WebForm_DoPostBackWithOptions(new WebForm_PostBackOptions(&quot;ctl00$body$btnSubUsercode&quot;, &quot;&quot;, true, &quot;&quot;, &quot;&quot;, false, false))" id="body_btnSubUsercode" class="loginbutton" />
+                            </div>
+                            <div id="body_divaddition">
+                                <p>Did you <a href="../Accounts/VerifyEmail.aspx">forget your password?</a></p>
+                                <p><a href="../Pages/Notice.aspx">Notice about Personal Information</a></p>
+                            </div>
+                        
+</div>
+
+
+                </fieldset>
+            </div>
+        </div>
+    </div>
+
+                        </div>
+                    </center>
+                    <div style="font-size: 14px">
+                        
+
+                    </div>
+                </div>
+            
+
+<script type="text/javascript">
+//<![CDATA[
+Sys.Application.add_init(function() {
+    $create(Sys.UI._Timer, {"enabled":false,"interval":1000,"uniqueID":"ctl00$body$TSend"}, null, null, $get("body_TSend"));
+});
+//]]>
+</script>
+<input type="hidden" name="__ncforminfo" value="oGbZbjorkK1ZhN1LCRVfGwgBKoiMi-v5hE-7ATNPd6-lPpMeaBkXHc0bOY2lXjJu32jzERDlR9G0Go8NCai0Q0fepUFMEvit9RMqchq0cb6gM6KQSN43Fmp0gwZ98BgCG6tCCrwJpzMTS_X1ubA0D6M9JJVVg_uoCcYYr2aiX4q_bDtnf2qFcV4p1DuPhmKLzLwoBx9NYzMcfI5Z2yyG_B5m2P8aQZ7ORt8yqBf4I3mbuvUz5Z4tVg=="/></form>
+        </div>
+        
+
+            <div id="Footer">
+                <div>
+                    <div align="center" class="copyrightText">
+                        <p style="padding-top: 5px; padding-bottom: 5px; color: white;">
+                            MDLandRec (Version 5.0.0) © Maryland State Archives, 1999-<span id="FTfooter_footeryear">2026</span>.
+                        <br />
+                            An <i><a href="https://aomol.msa.maryland.gov/html/index.html" target="_Blank" rel="noopener noreferrer" tabindex="-1"><b>Archives of Maryland Online</b></a></i> electronic publication
+                        <br />
+                            Use of this website constitutes an agreement by the user to abide by the <a href="https://msa.maryland.gov/msa/main/html/aup.html" target="_Blank" rel="noopener noreferrer" tabindex="-1">Archives' Acceptable Use Policy</a>.<br />
+                        </p>
+                        <span id="FTfooter_testmetrics">S52</span>
+                    </div>
+                </div>
+            </div>
+        
+    </div>
+</body>
+</html>
