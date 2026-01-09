@@ -48,20 +48,30 @@ class CredentialIssuer:
         subject_did: str,
         property_data: dict,
         title_analysis: dict,
-        expiration_days: int = 365
+        expiration_days: Optional[int] = None
     ) -> dict:
         """
         Issue a Property Title Verifiable Credential.
-        
+
         This is the main credential that proves property ownership
-        and title status.
-        
+        and title status AT A POINT IN TIME.
+
+        Property credentials do NOT expire by default because:
+        - They attest to historical facts (chain of title as of verification date)
+        - Property ownership doesn't expire
+        - Historical verification remains valid as a past statement
+
+        Instead of expiration, use REVOCATION when:
+        - Property is sold (new owner)
+        - New liens/encumbrances discovered
+        - Errors found in the analysis
+
         Args:
             subject_did: DID of the property (not the owner)
             property_data: Property information (address, legal description)
             title_analysis: AI analysis results (chain, risk, liens)
-            expiration_days: How long until credential expires
-            
+            expiration_days: Optional expiration (None = no expiration, default)
+
         Returns:
             Signed Verifiable Credential
         """
@@ -88,7 +98,6 @@ class CredentialIssuer:
                 "name": "TitleChain Verification Service"
             },
             "issuanceDate": datetime.utcnow().isoformat() + "Z",
-            "expirationDate": (datetime.utcnow() + timedelta(days=expiration_days)).isoformat() + "Z",
             "credentialSubject": {
                 "id": subject_did,
                 "type": "RealProperty",
@@ -127,7 +136,11 @@ class CredentialIssuer:
                 "type": "RevocationList2020"
             }
         }
-        
+
+        # Add expiration date only if specified (optional)
+        if expiration_days is not None:
+            credential["expirationDate"] = (datetime.utcnow() + timedelta(days=expiration_days)).isoformat() + "Z"
+
         # Sign the credential
         proof = self._create_proof(credential)
         credential["proof"] = proof

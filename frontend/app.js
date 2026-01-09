@@ -205,10 +205,12 @@ async function issueCredential() {
         }`;
         
         // Dates
-        document.getElementById('credIssued').textContent = 
+        document.getElementById('credIssued').textContent =
             new Date(data.credential.issuanceDate).toLocaleDateString();
-        document.getElementById('credExpires').textContent = 
-            new Date(data.credential.expirationDate).toLocaleDateString();
+        document.getElementById('credExpires').textContent =
+            data.credential.expirationDate
+                ? new Date(data.credential.expirationDate).toLocaleDateString()
+                : 'Never (permanent record)';
         
         // Raw credential JSON
         document.getElementById('rawCredential').textContent = 
