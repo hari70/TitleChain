@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TitleChain - Property Search</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        .gradient-text {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .fade-in { animation: fadeIn 0.3s ease-in; }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body class="bg-gradient-to-br from-gray-50 to-blue-50 min-h-screen">
+    <div class="container mx-auto px-4 py-8 max-w-6xl">
+        <!-- Header -->
+        <div class="text-center mb-8">
+            <h1 class="text-4xl font-bold gradient-text">🔍 TitleChain Search Agent</h1>
+            <p class="text-gray-600 mt-2 text-lg">Agentic AI for Multi-County Property Search</p>
+            <div class="mt-3 flex justify-center gap-4 text-sm">
+                <a href="/app" class="text-blue-600 hover:underline">← Back to Main App</a>
+                <span class="text-gray-300">|</span>
+                <a href="/docs" target="_blank" class="text-blue-600 hover:underline">📚 API Docs</a>
+            </div>
+        </div>
+
+        <!-- Search Form -->
+        <div class="bg-white rounded-xl shadow-lg p-6 mb-6">
+            <h2 class="text-2xl font-bold mb-6 flex items-center">
+                <span class="mr-3 text-3xl">🏠</span>
+                Property Search
+            </h2>
+
+            <div class="grid md:grid-cols-2 gap-6">
+                <!-- Left Column: Search Criteria -->
+                <div class="space-y-4">
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">
+                            Property Address
+                            <span class="text-gray-400 font-normal ml-2">(Most common)</span>
+                        </label>
+                        <input type="text" id="address"
+                               placeholder="8617 Grant St Bethesda MD 20817"
+                               class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                    </div>
+
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">
+                            Parcel Number
+                            <span class="text-gray-400 font-normal ml-2">(Most accurate)</span>
+                        </label>
+                        <input type="text" id="parcel"
+                               placeholder="12-345-6789 (optional)"
+                               class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                    </div>
+
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">
+                            Owner Name
+                            <span class="text-gray-400 font-normal ml-2">(Optional)</span>
+                        </label>
+                        <input type="text" id="owner"
+                               placeholder="John Smith (optional)"
+                               class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                    </div>
+
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">
+                            Years of History
+                        </label>
+                        <select id="years" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                            <option value="10">Last 10 years</option>
+                            <option value="30">Last 30 years</option>
+                            <option value="60" selected>Last 60 years (Standard)</option>
+                            <option value="100">Last 100 years (Full history)</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Right Column: County Selection & Credentials -->
+                <div class="space-y-4">
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">
+                            County
+                        </label>
+                        <select id="county" onchange="updateCountyInfo()" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                            <option value="Montgomery,MD">Montgomery County, MD ✅ Live</option>
+                            <option value="Los Angeles,CA">Los Angeles County, CA (Mock)</option>
+                            <option value="Cook,IL">Cook County, IL (Mock)</option>
+                        </select>
+                    </div>
+
+                    <div id="countyInfo" class="bg-blue-50 border border-blue-200 rounded-lg p-4 text-sm">
+                        <p class="font-medium text-blue-900 mb-1">Montgomery County, MD</p>
+                        <p class="text-blue-700 text-xs">Population: 1,062,061 • Real-time data available</p>
+                        <p class="text-blue-600 text-xs mt-2">
+                            🔐 Requires MDLandRec credentials in .env file
+                        </p>
+                    </div>
+
+                    <div>
+                        <label class="flex items-center space-x-2 cursor-pointer">
+                            <input type="checkbox" id="useMock" class="rounded">
+                            <span class="text-sm text-gray-700">Use mock data (no credentials)</span>
+                        </label>
+                    </div>
+
+                    <div class="bg-yellow-50 border border-yellow-200 rounded-lg p-4">
+                        <p class="text-sm text-yellow-800 font-medium mb-2">💡 Tip</p>
+                        <p class="text-xs text-yellow-700">
+                            For real Montgomery County data, ensure your MDLandRec email/password
+                            are in the .env file. Uncheck "Use mock data" above.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Search Button -->
+            <button onclick="searchProperty()"
+                    class="w-full mt-6 bg-gradient-to-r from-blue-600 to-purple-600 text-white py-4 px-6 rounded-lg hover:from-blue-700 hover:to-purple-700 transition font-bold text-lg shadow-lg">
+                🔍 Search Property Records
+            </button>
+        </div>
+
+        <!-- Loading -->
+        <div id="loading" class="hidden bg-white rounded-xl shadow-lg p-8 text-center fade-in">
+            <div class="animate-spin rounded-full h-16 w-16 border-b-4 border-blue-600 mx-auto mb-4"></div>
+            <p class="text-xl font-bold text-gray-900">🤖 AI Agent Searching...</p>
+            <p class="text-gray-600 mt-2">Connecting to county systems and retrieving records</p>
+            <div class="mt-4 text-sm text-gray-500">
+                <p id="statusText">Initializing...</p>
+            </div>
+        </div>
+
+        <!-- Results -->
+        <div id="results" class="hidden fade-in">
+            <!-- Summary Card -->
+            <div class="bg-white rounded-xl shadow-lg p-6 mb-6">
+                <h2 class="text-2xl font-bold mb-4 flex items-center">
+                    <span class="mr-3 text-3xl">📊</span>
+                    Search Results
+                </h2>
+
+                <div class="grid grid-cols-4 gap-4 mb-6">
+                    <div class="bg-blue-50 rounded-lg p-4 text-center">
+                        <p class="text-3xl font-bold text-blue-600" id="docCount">0</p>
+                        <p class="text-sm text-gray-600 mt-1">Documents Found</p>
+                    </div>
+                    <div class="bg-green-50 rounded-lg p-4 text-center">
+                        <p class="text-3xl font-bold text-green-600" id="countiesSearched">0</p>
+                        <p class="text-sm text-gray-600 mt-1">Counties Searched</p>
+                    </div>
+                    <div class="bg-purple-50 rounded-lg p-4 text-center">
+                        <p class="text-3xl font-bold text-purple-600" id="searchTime">0s</p>
+                        <p class="text-sm text-gray-600 mt-1">Search Time</p>
+                    </div>
+                    <div class="bg-orange-50 rounded-lg p-4 text-center">
+                        <p class="text-xl font-bold text-orange-600" id="searchStatus">-</p>
+                        <p class="text-sm text-gray-600 mt-1">Status</p>
+                    </div>
+                </div>
+
+                <div id="searchId" class="text-sm text-gray-500"></div>
+            </div>
+
+            <!-- Documents List -->
+            <div id="documentsList" class="space-y-4">
+                <!-- Documents will be inserted here -->
+            </div>
+        </div>
+
+        <!-- Error -->
+        <div id="error" class="hidden bg-red-50 border border-red-200 rounded-xl p-6 fade-in">
+            <h3 class="text-lg font-bold text-red-800 mb-2">❌ Search Failed</h3>
+            <p id="errorMessage" class="text-red-700"></p>
+        </div>
+    </div>
+
+    <script>
+        let currentSearchId = null;
+
+        function updateCountyInfo() {
+            const select = document.getElementById('county');
+            const county = select.value.split(',')[0];
+            const state = select.value.split(',')[1];
+            const info = document.getElementById('countyInfo');
+
+            const countyData = {
+                'Montgomery,MD': {
+                    name: 'Montgomery County, MD',
+                    pop: '1,062,061',
+                    status: 'Real-time data available',
+                    note: '🔐 Requires MDLandRec credentials in .env file'
+                },
+                'Los Angeles,CA': {
+                    name: 'Los Angeles County, CA',
+                    pop: '10,014,009',
+                    status: 'Mock data only (API available but not yet implemented)',
+                    note: '⚠️ Currently returns sample test data'
+                },
+                'Cook,IL': {
+                    name: 'Cook County, IL',
+                    pop: '5,275,541',
+                    status: 'Mock data only (Portal available but not yet implemented)',
+                    note: '⚠️ Currently returns sample test data'
+                }
+            };
+
+            const data = countyData[select.value];
+            info.innerHTML = `
+                <p class="font-medium text-blue-900 mb-1">${data.name}</p>
+                <p class="text-blue-700 text-xs">Population: ${data.pop} • ${data.status}</p>
+                <p class="text-blue-600 text-xs mt-2">${data.note}</p>
+            `;
+        }
+
+        async function searchProperty() {
+            const address = document.getElementById('address').value;
+            const parcel = document.getElementById('parcel').value;
+            const owner = document.getElementById('owner').value;
+            const years = document.getElementById('years').value;
+            const countyValue = document.getElementById('county').value;
+            const useMock = document.getElementById('useMock').checked;
+
+            // Validation
+            if (!address && !parcel && !owner) {
+                alert('Please enter at least one search criterion (address, parcel, or owner)');
+                return;
+            }
+
+            const [county, state] = countyValue.split(',');
+
+            // Hide previous results
+            document.getElementById('results').classList.add('hidden');
+            document.getElementById('error').classList.add('hidden');
+            document.getElementById('loading').classList.remove('hidden');
+            document.getElementById('statusText').textContent = 'Connecting to county system...';
+
+            // Build search request
+            const searchData = {
+                counties: [{ county, state }],
+                years_back: parseInt(years)
+            };
+
+            if (address) searchData.property_address = address;
+            if (parcel) searchData.parcel_number = parcel;
+            if (owner) searchData.current_owner = owner;
+
+            // Add credentials if not using mock
+            if (!useMock && county === 'Montgomery' && state === 'MD') {
+                // Note: In production, credentials should come from secure session
+                // For now, they're in .env on the backend
+                document.getElementById('statusText').textContent = 'Authenticating with MDLandRec...';
+            }
+
+            const startTime = Date.now();
+
+            try {
+                // Start search
+                const response = await fetch('/agent/search', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(searchData)
+                });
+
+                if (!response.ok) {
+                    throw new Error(`HTTP ${response.status}: ${await response.text()}`);
+                }
+
+                const result = await response.json();
+                currentSearchId = result.search_id;
+
+                document.getElementById('statusText').textContent = 'Retrieving documents...';
+
+                // Get full results
+                const detailsResponse = await fetch(`/agent/search/${currentSearchId}`);
+                const details = await detailsResponse.json();
+
+                const searchTime = ((Date.now() - startTime) / 1000).toFixed(1);
+
+                // Display results
+                displayResults(details, searchTime);
+                document.getElementById('loading').classList.add('hidden');
+
+            } catch (error) {
+                document.getElementById('loading').classList.add('hidden');
+                document.getElementById('error').classList.remove('hidden');
+                document.getElementById('errorMessage').textContent = error.message;
+                console.error('Search failed:', error);
+            }
+        }
+
+        function displayResults(data, searchTime) {
+            // Update summary stats
+            document.getElementById('docCount').textContent = data.total_documents;
+            document.getElementById('countiesSearched').textContent = data.counties_searched;
+            document.getElementById('searchTime').textContent = searchTime + 's';
+            document.getElementById('searchStatus').textContent = data.status.toUpperCase();
+            document.getElementById('searchId').textContent = `Search ID: ${data.search_id}`;
+
+            // Display documents
+            const docsList = document.getElementById('documentsList');
+            docsList.innerHTML = '';
+
+            if (data.total_documents === 0) {
+                docsList.innerHTML = `
+                    <div class="bg-yellow-50 border border-yellow-200 rounded-xl p-6 text-center">
+                        <p class="text-2xl mb-2">🔍</p>
+                        <p class="font-bold text-yellow-900">No Documents Found</p>
+                        <p class="text-sm text-yellow-700 mt-2">
+                            Try searching with different criteria or check if the address is correct.
+                        </p>
+                    </div>
+                `;
+            } else {
+                data.documents.forEach((doc, index) => {
+                    const docHtml = createDocumentCard(doc, index + 1);
+                    docsList.innerHTML += docHtml;
+                });
+            }
+
+            document.getElementById('results').classList.remove('hidden');
+        }
+
+        function createDocumentCard(doc, index) {
+            const typeColors = {
+                'deed': 'blue',
+                'mortgage': 'green',
+                'lien': 'red',
+                'release': 'purple',
+                'easement': 'orange'
+            };
+
+            const color = typeColors[doc.document_type] || 'gray';
+            const amount = doc.consideration ? `$${doc.consideration.toLocaleString()}` : 'N/A';
+
+            return `
+                <div class="bg-white rounded-xl shadow-lg p-6 border-l-4 border-${color}-500">
+                    <div class="flex justify-between items-start mb-4">
+                        <div>
+                            <h3 class="text-xl font-bold text-gray-900">
+                                ${index}. ${doc.document_type.toUpperCase()}
+                            </h3>
+                            <p class="text-sm text-gray-500 mt-1">
+                                Recorded: ${doc.recording_date ? new Date(doc.recording_date).toLocaleDateString() : 'N/A'}
+                            </p>
+                        </div>
+                        <span class="bg-${color}-100 text-${color}-800 px-3 py-1 rounded-full text-sm font-medium">
+                            ${doc.county}, ${doc.state}
+                        </span>
+                    </div>
+
+                    <div class="grid md:grid-cols-2 gap-4 mb-4">
+                        <div>
+                            <p class="text-xs font-medium text-gray-500 uppercase tracking-wide">From (Grantor)</p>
+                            <p class="text-sm font-medium text-gray-900 mt-1">
+                                ${doc.grantor ? doc.grantor.join(', ') : 'N/A'}
+                            </p>
+                        </div>
+                        <div>
+                            <p class="text-xs font-medium text-gray-500 uppercase tracking-wide">To (Grantee)</p>
+                            <p class="text-sm font-medium text-gray-900 mt-1">
+                                ${doc.grantee ? doc.grantee.join(', ') : 'N/A'}
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-3 gap-4 pt-4 border-t">
+                        <div>
+                            <p class="text-xs text-gray-500">Amount</p>
+                            <p class="font-bold text-gray-900">${amount}</p>
+                        </div>
+                        <div>
+                            <p class="text-xs text-gray-500">Book/Page</p>
+                            <p class="font-medium text-gray-900">${doc.book || 'N/A'} / ${doc.page || 'N/A'}</p>
+                        </div>
+                        <div>
+                            <p class="text-xs text-gray-500">Instrument #</p>
+                            <p class="font-medium text-gray-900">${doc.instrument_number || 'N/A'}</p>
+                        </div>
+                    </div>
+
+                    ${doc.property_address ? `
+                        <div class="mt-4 pt-4 border-t">
+                            <p class="text-xs text-gray-500">Property Address</p>
+                            <p class="font-medium text-gray-900">${doc.property_address}</p>
+                        </div>
+                    ` : ''}
+                </div>
+            `;
+        }
+
+        // Initialize
+        updateCountyInfo();
+    </script>
+</body>
+</html>

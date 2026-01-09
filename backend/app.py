@@ -600,6 +600,11 @@ if frontend_path.exists():
         """Serve the demo frontend application."""
         return FileResponse(str(frontend_path / "index.html"))
 
+    @app.get("/search", tags=["Frontend"])
+    async def serve_search():
+        """Serve the Search Agent UI for testing property searches."""
+        return FileResponse(str(frontend_path / "search.html"))
+
 
 # =============================================================================
 # Main Entry Point
@@ -616,10 +621,11 @@ if __name__ == "__main__":
 ╔═══════════════════════════════════════════════════════════════╗
 ║                     TitleChain API                            ║
 ╠═══════════════════════════════════════════════════════════════╣
-║  🚀 Server:    http://{host}:{port}                          
-║  📚 API Docs:  http://{host}:{port}/docs                     
-║  🌐 Frontend:  http://{host}:{port}/app                      
-║  🔐 Issuer:    {ISSUER_DID[:50]}...
+║  🚀 Server:     http://{host}:{port}
+║  📚 API Docs:   http://{host}:{port}/docs
+║  🌐 Frontend:   http://{host}:{port}/app
+║  🔍 Search UI:  http://{host}:{port}/search
+║  🔐 Issuer:     {ISSUER_DID[:50]}...
 ╚═══════════════════════════════════════════════════════════════╝
     """)
     
