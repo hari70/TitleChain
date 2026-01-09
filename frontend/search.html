@@ -31,6 +31,29 @@
             </div>
         </div>
 
+        <!-- Montgomery County Info Banner -->
+        <div id="montgomeryInfo" class="bg-blue-50 border-l-4 border-blue-500 p-4 mb-6 rounded-r-lg" style="display: none;">
+            <div class="flex items-start">
+                <div class="flex-shrink-0">
+                    <svg class="h-5 w-5 text-blue-500" fill="currentColor" viewBox="0 0 20 20">
+                        <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd"/>
+                    </svg>
+                </div>
+                <div class="ml-3">
+                    <h3 class="text-sm font-medium text-blue-800">Montgomery County MD Search Tips</h3>
+                    <div class="mt-2 text-sm text-blue-700">
+                        <p><strong>MDLandRec searches by NAME only.</strong> To search by address:</p>
+                        <ol class="list-decimal ml-5 mt-1 space-y-1">
+                            <li>Visit <a href="https://sdat.dat.maryland.gov/RealProperty/" target="_blank" class="underline font-medium">SDAT website</a> to look up the owner's name from the address</li>
+                            <li>Return here and search using the <strong>Owner Name</strong> field (last name works best)</li>
+                            <li>Alternatively, get the <strong>Parcel Number</strong> from SDAT and search by that</li>
+                        </ol>
+                        <p class="mt-2 text-xs italic">📖 See <a href="/static/MONTGOMERY_WORKFLOW.md" class="underline font-medium">MONTGOMERY_WORKFLOW.md</a> for detailed instructions</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <!-- Search Form -->
         <div class="bg-white rounded-xl shadow-lg p-6 mb-6">
             <h2 class="text-2xl font-bold mb-6 flex items-center">
@@ -64,11 +87,12 @@
                     <div>
                         <label class="block text-sm font-medium text-gray-700 mb-2">
                             Owner Name
-                            <span class="text-gray-400 font-normal ml-2">(Optional)</span>
+                            <span class="text-blue-600 font-normal ml-2">⭐ (Required for Montgomery MD)</span>
                         </label>
                         <input type="text" id="owner"
-                               placeholder="John Smith (optional)"
+                               placeholder="Smith (last name - required for Montgomery MD)"
                                class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                        <p class="text-xs text-gray-500 mt-1">For Montgomery MD: Use last name from SDAT lookup</p>
                     </div>
 
                     <div>
@@ -191,13 +215,21 @@
             const county = select.value.split(',')[0];
             const state = select.value.split(',')[1];
             const info = document.getElementById('countyInfo');
+            const montgomeryBanner = document.getElementById('montgomeryInfo');
+
+            // Show/hide Montgomery County info banner
+            if (select.value === 'Montgomery,MD') {
+                montgomeryBanner.style.display = 'block';
+            } else {
+                montgomeryBanner.style.display = 'none';
+            }
 
             const countyData = {
                 'Montgomery,MD': {
                     name: 'Montgomery County, MD',
                     pop: '1,062,061',
                     status: 'Real-time data available',
-                    note: '🔐 Requires MDLandRec credentials in .env file'
+                    note: '🔐 Requires MDLandRec credentials in .env file + Owner Name'
                 },
                 'Los Angeles,CA': {
                     name: 'Los Angeles County, CA',
@@ -221,6 +253,11 @@
             `;
         }
 
+        // Show Montgomery banner on page load (default selection)
+        window.addEventListener('DOMContentLoaded', () => {
+            updateCountyInfo();
+        });
+
         async function searchProperty() {
             const address = document.getElementById('address').value;
             const parcel = document.getElementById('parcel').value;
@@ -229,13 +266,22 @@
             const countyValue = document.getElementById('county').value;
             const useMock = document.getElementById('useMock').checked;
 
+            const [county, state] = countyValue.split(',');
+
             // Validation
             if (!address && !parcel && !owner) {
                 alert('Please enter at least one search criterion (address, parcel, or owner)');
                 return;
             }
 
-            const [county, state] = countyValue.split(',');
+            // Montgomery County specific validation
+            if (county === 'Montgomery' && state === 'MD' && !owner && !useMock) {
+                alert('⚠️ Montgomery County MD requires Owner Name for real searches.\n\n' +
+                      '1. Visit SDAT website to look up owner from address\n' +
+                      '2. Enter the owner\'s last name in the "Owner Name" field\n' +
+                      '3. Or check "Use mock data" to test without credentials');
+                return;
+            }
 
             // Hide previous results
             document.getElementById('results').classList.add('hidden');
