@@ -62,7 +62,7 @@ Visit **http://localhost:8000/app** to see the full 3-step demo.
 - Credential is issued with:
   - Issuer: `did:web:localhost:8000:org:platform`
   - Subject: Your DID
-  - Expiration date: 1 year
+  - Valid Until: Never (permanent historical record)
   - Cryptographic proof
 
 **The Cryptographic Proof:**
@@ -75,6 +75,15 @@ Visit **http://localhost:8000/app** to see the full 3-step demo.
   "proofValue": "z58DAdF...base58-encoded-signature"
 }
 ```
+
+**Important: Credentials Don't Expire!**
+- Property title credentials have NO expiration date
+- They represent historical facts that remain true forever
+- "On 2026-01-09, the chain of title was verified" - this fact never expires
+- Instead of expiration, credentials can be **revoked** when:
+  - Property is sold (new owner)
+  - New lien discovered
+  - Error found in analysis
 
 **How Verification Works:**
 1. Take the credential JSON (without the proof)
