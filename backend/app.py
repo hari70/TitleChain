@@ -25,8 +25,9 @@ from did_manager import DIDManager, create_property_did
 from credential_issuer import CredentialIssuer, compute_credential_hash
 from title_analyzer import TitleAnalyzer, MockTitleAnalyzer
 
-# Load environment variables
-load_dotenv()
+# Load environment variables from parent directory
+env_path = Path(__file__).parent.parent / ".env"
+load_dotenv(dotenv_path=env_path, override=True)
 
 
 # =============================================================================
