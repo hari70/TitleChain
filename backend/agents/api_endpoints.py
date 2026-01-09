@@ -161,8 +161,22 @@ async def start_title_search(
             max_documents=request.max_documents
         )
 
+        # Load credentials from environment if not provided in request
+        credentials = request.credentials or {}
+
+        # Auto-load Montgomery County credentials from .env if not provided
+        if not credentials.get('montgomery_md'):
+            montgomery_email = os.getenv('MONTGOMERY_MD_EMAIL')
+            montgomery_password = os.getenv('MONTGOMERY_MD_PASSWORD')
+            if montgomery_email and montgomery_password:
+                credentials['montgomery_md'] = {
+                    'email': montgomery_email,
+                    'password': montgomery_password
+                }
+                logger.info("Loaded Montgomery County credentials from environment")
+
         # Create search agent
-        agent = SearchAgent(credentials=request.credentials or {})
+        agent = SearchAgent(credentials=credentials)
 
         # Start search in background
         async def run_search():
