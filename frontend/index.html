@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TitleChain - SSI + AI Title Search</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        .step-active { border-color: #3b82f6; background-color: #eff6ff; }
+        .step-complete { border-color: #22c55e; background-color: #f0fdf4; }
+        .json-display { font-family: 'Fira Code', monospace; font-size: 11px; }
+        .fade-in { animation: fadeIn 0.3s ease-in; }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .gradient-text {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+    </style>
+</head>
+<body class="bg-gradient-to-br from-gray-50 to-blue-50 min-h-screen">
+    <div class="container mx-auto px-4 py-8 max-w-4xl">
+        <!-- Header -->
+        <div class="text-center mb-8">
+            <h1 class="text-4xl font-bold gradient-text">🔐 TitleChain</h1>
+            <p class="text-gray-600 mt-2 text-lg">Self-Sovereign Identity + AI-Powered Title Search</p>
+            <div class="mt-3 flex justify-center gap-4 text-sm">
+                <a href="/docs" target="_blank" class="text-blue-600 hover:underline">📚 API Docs</a>
+                <span class="text-gray-300">|</span>
+                <a href="https://github.com/yourusername/titlechain" target="_blank" class="text-blue-600 hover:underline">⭐ GitHub</a>
+            </div>
+        </div>
+
+        <!-- Progress Steps -->
+        <div class="flex justify-between mb-8">
+            <div id="step1-indicator" class="flex-1 border-2 rounded-lg p-3 mx-1 text-center step-active transition-all duration-300">
+                <div class="text-2xl mb-1">🔑</div>
+                <div class="font-bold">1. Create Identity</div>
+                <div class="text-xs text-gray-500">Generate your DID</div>
+            </div>
+            <div id="step2-indicator" class="flex-1 border-2 rounded-lg p-3 mx-1 text-center border-gray-200 transition-all duration-300">
+                <div class="text-2xl mb-1">📄</div>
+                <div class="font-bold">2. Upload Deed</div>
+                <div class="text-xs text-gray-500">AI analyzes document</div>
+            </div>
+            <div id="step3-indicator" class="flex-1 border-2 rounded-lg p-3 mx-1 text-center border-gray-200 transition-all duration-300">
+                <div class="text-2xl mb-1">✅</div>
+                <div class="font-bold">3. Get Credential</div>
+                <div class="text-xs text-gray-500">Verifiable proof</div>
+            </div>
+        </div>
+
+        <!-- Step 1: Create Identity -->
+        <div id="step1" class="bg-white rounded-xl shadow-lg p-6 mb-6 border border-gray-100">
+            <h2 class="text-xl font-bold mb-4 flex items-center">
+                <span class="bg-blue-100 text-blue-800 rounded-full w-8 h-8 flex items-center justify-center mr-2 text-sm">1</span>
+                Create Your Digital Identity
+            </h2>
+            <p class="text-gray-600 mb-4">
+                A <strong>DID (Decentralized Identifier)</strong> is like a digital passport you control. 
+                No company owns it — you do. It's cryptographically yours forever.
+            </p>
+            
+            <div class="space-y-4">
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Your ID</label>
+                    <input type="text" id="userId" placeholder="e.g., alice123" 
+                           class="block w-full rounded-lg border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 p-3 border text-lg">
+                    <p class="text-xs text-gray-500 mt-1">Choose a unique identifier (letters, numbers, underscores)</p>
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Name (optional)</label>
+                    <input type="text" id="userName" placeholder="Your name" 
+                           class="block w-full rounded-lg border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 p-3 border">
+                </div>
+                <button onclick="createIdentity()" 
+                        class="w-full bg-gradient-to-r from-blue-600 to-blue-700 text-white py-3 px-4 rounded-lg hover:from-blue-700 hover:to-blue-800 transition font-medium text-lg shadow-md">
+                    🔑 Create My Identity
+                </button>
+            </div>
+            
+            <div id="identityResult" class="mt-4 hidden fade-in">
+                <div class="bg-green-50 border border-green-200 rounded-lg p-4">
+                    <h3 class="font-bold text-green-800 flex items-center">
+                        <span class="mr-2">✓</span> Identity Created!
+                    </h3>
+                    <p class="text-sm text-green-700 mt-2">Your DID (Decentralized Identifier):</p>
+                    <code id="userDid" class="block bg-green-100 p-3 rounded-lg mt-2 text-xs break-all font-mono"></code>
+                    <p class="text-xs text-green-600 mt-3 flex items-center">
+                        <span class="mr-1">💡</span> This DID is cryptographically yours. No one can revoke it.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Step 2: Upload Deed -->
+        <div id="step2" class="bg-white rounded-xl shadow-lg p-6 mb-6 border border-gray-100 opacity-50 pointer-events-none transition-all duration-300">
+            <h2 class="text-xl font-bold mb-4 flex items-center">
+                <span class="bg-purple-100 text-purple-800 rounded-full w-8 h-8 flex items-center justify-center mr-2 text-sm">2</span>
+                Upload Deed Document
+            </h2>
+            <p class="text-gray-600 mb-4">
+                Upload a deed document (PDF or image). Our <strong>AI</strong> will extract property information 
+                and analyze for potential title issues — in seconds instead of hours.
+            </p>
+            
+            <div class="border-2 border-dashed border-gray-300 rounded-xl p-8 text-center hover:border-purple-400 hover:bg-purple-50 transition-all cursor-pointer"
+                 onclick="document.getElementById('deedFile').click()">
+                <input type="file" id="deedFile" accept=".pdf,.png,.jpg,.jpeg,.txt" 
+                       class="hidden" onchange="uploadDeed()">
+                <div class="text-5xl mb-3">📄</div>
+                <button class="bg-purple-100 text-purple-700 py-2 px-6 rounded-lg hover:bg-purple-200 transition font-medium">
+                    Select Document
+                </button>
+                <p class="text-sm text-gray-500 mt-3">Supports: PDF, PNG, JPG, TXT</p>
+            </div>
+            
+            <div id="uploadProgress" class="mt-4 hidden">
+                <div class="flex items-center justify-center p-4 bg-purple-50 rounded-lg">
+                    <div class="animate-spin rounded-full h-6 w-6 border-b-2 border-purple-600 mr-3"></div>
+                    <span class="text-purple-700 font-medium">🤖 AI is analyzing your document...</span>
+                </div>
+            </div>
+            
+            <div id="analysisResult" class="mt-4 hidden fade-in">
+                <div class="bg-purple-50 border border-purple-200 rounded-lg p-4">
+                    <h3 class="font-bold text-purple-800 flex items-center">
+                        <span class="mr-2">📊</span> Analysis Complete
+                    </h3>
+                    
+                    <div class="mt-4 grid grid-cols-2 gap-4">
+                        <div class="bg-white rounded-lg p-4 shadow-sm">
+                            <p class="text-xs font-medium text-gray-500 uppercase tracking-wide">Document Type</p>
+                            <p id="docType" class="text-xl font-bold text-gray-900 mt-1"></p>
+                        </div>
+                        <div class="bg-white rounded-lg p-4 shadow-sm">
+                            <p class="text-xs font-medium text-gray-500 uppercase tracking-wide">Risk Score</p>
+                            <p id="riskScore" class="text-xl font-bold mt-1"></p>
+                        </div>
+                    </div>
+                    
+                    <div class="mt-4 bg-white rounded-lg p-4 shadow-sm">
+                        <p class="text-xs font-medium text-gray-500 uppercase tracking-wide">Parties</p>
+                        <p id="parties" class="text-sm font-medium text-gray-900 mt-1"></p>
+                    </div>
+                    
+                    <details class="mt-4">
+                        <summary class="cursor-pointer text-purple-600 text-sm hover:underline font-medium">
+                            📋 View Full Analysis (JSON)
+                        </summary>
+                        <pre id="fullAnalysis" class="json-display bg-gray-900 text-green-400 p-4 rounded-lg mt-2 overflow-auto max-h-64"></pre>
+                    </details>
+                </div>
+            </div>
+        </div>
+
+        <!-- Step 3: Issue Credential -->
+        <div id="step3" class="bg-white rounded-xl shadow-lg p-6 mb-6 border border-gray-100 opacity-50 pointer-events-none transition-all duration-300">
+            <h2 class="text-xl font-bold mb-4 flex items-center">
+                <span class="bg-green-100 text-green-800 rounded-full w-8 h-8 flex items-center justify-center mr-2 text-sm">3</span>
+                Issue Verifiable Credential
+            </h2>
+            <p class="text-gray-600 mb-4">
+                Create a <strong>cryptographically signed proof</strong> of ownership. Anyone can verify 
+                this credential mathematically — no need to call you or us.
+            </p>
+            
+            <button onclick="issueCredential()" 
+                    class="w-full bg-gradient-to-r from-green-600 to-green-700 text-white py-4 px-4 rounded-lg hover:from-green-700 hover:to-green-800 transition font-medium text-lg shadow-md">
+                🔏 Issue My Property Credential
+            </button>
+            
+            <div id="credentialResult" class="mt-4 hidden fade-in">
+                <div class="bg-gradient-to-br from-green-50 to-emerald-50 border border-green-200 rounded-lg p-4">
+                    <h3 class="font-bold text-green-800 flex items-center text-lg">
+                        <span class="mr-2">🎉</span> Credential Issued!
+                    </h3>
+                    
+                    <div class="mt-4 bg-white rounded-xl p-5 border shadow-sm">
+                        <div class="flex justify-between items-start">
+                            <div>
+                                <p class="font-bold text-xl text-gray-900">Property Title Credential</p>
+                                <p id="credSubject" class="text-sm text-gray-600 mt-1"></p>
+                            </div>
+                            <span id="riskBadge" class="px-3 py-1 rounded-full text-sm font-bold"></span>
+                        </div>
+                        
+                        <div class="mt-5 grid grid-cols-2 gap-4 text-sm">
+                            <div>
+                                <p class="text-gray-500">Issued</p>
+                                <p id="credIssued" class="font-medium text-gray-900"></p>
+                            </div>
+                            <div>
+                                <p class="text-gray-500">Expires</p>
+                                <p id="credExpires" class="font-medium text-gray-900"></p>
+                            </div>
+                        </div>
+                        
+                        <div class="mt-5 pt-4 border-t flex gap-3">
+                            <button onclick="verifyCredential()" 
+                                    class="flex-1 bg-green-100 text-green-700 py-2 px-4 rounded-lg hover:bg-green-200 transition font-medium">
+                                ✓ Verify Credential
+                            </button>
+                            <button onclick="copyCredential()" 
+                                    class="flex-1 bg-gray-100 text-gray-700 py-2 px-4 rounded-lg hover:bg-gray-200 transition font-medium">
+                                📋 Copy JSON
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <details class="mt-4">
+                        <summary class="cursor-pointer text-green-600 text-sm hover:underline font-medium">
+                            🔐 View Raw Credential (JSON-LD)
+                        </summary>
+                        <pre id="rawCredential" class="json-display bg-gray-900 text-green-400 p-4 rounded-lg mt-2 overflow-auto max-h-64"></pre>
+                    </details>
+                </div>
+            </div>
+        </div>
+
+        <!-- How It Works -->
+        <div class="bg-white rounded-xl shadow-lg p-6 border border-gray-100">
+            <h2 class="text-xl font-bold mb-6 text-center">How TitleChain Works</h2>
+            
+            <div class="grid md:grid-cols-3 gap-6">
+                <div class="text-center p-4 rounded-xl bg-blue-50">
+                    <div class="text-4xl mb-3">🔑</div>
+                    <h3 class="font-bold text-gray-900">Self-Sovereign Identity</h3>
+                    <p class="text-sm text-gray-600 mt-2">
+                        Your DID is cryptographically yours. No company can revoke or control it.
+                    </p>
+                </div>
+                
+                <div class="text-center p-4 rounded-xl bg-purple-50">
+                    <div class="text-4xl mb-3">🤖</div>
+                    <h3 class="font-bold text-gray-900">AI Document Analysis</h3>
+                    <p class="text-sm text-gray-600 mt-2">
+                        Claude AI extracts and analyzes deed documents in seconds, not hours.
+                    </p>
+                </div>
+                
+                <div class="text-center p-4 rounded-xl bg-green-50">
+                    <div class="text-4xl mb-3">⛓️</div>
+                    <h3 class="font-bold text-gray-900">Verifiable Credentials</h3>
+                    <p class="text-sm text-gray-600 mt-2">
+                        Cryptographically signed proofs anyone can verify instantly.
+                    </p>
+                </div>
+            </div>
+            
+            <div class="mt-8 p-5 bg-gradient-to-r from-blue-50 to-purple-50 rounded-xl">
+                <h3 class="font-bold text-gray-900 mb-3">🎯 The Vision</h3>
+                <p class="text-sm text-gray-600">
+                    Replace manual title search (4-6 hours, $1,900) with automated verification 
+                    (2-3 minutes, $250). Blockchain provides the audit trail; AI automates the analysis; 
+                    you maintain control of your identity and property records.
+                </p>
+            </div>
+        </div>
+        
+        <!-- Footer -->
+        <div class="text-center mt-8 text-sm text-gray-500">
+            <p>Built with FastAPI • Claude AI • W3C DID/VC • Polygon</p>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>

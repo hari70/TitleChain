@@ -1,0 +1,51 @@
+# TitleChain - Python Dependencies
+
+# Web framework
+fastapi==0.109.0
+uvicorn==0.27.0
+python-multipart==0.0.6
+
+# Cryptography for DIDs
+cryptography==42.0.0
+python-jose[cryptography]==3.3.0
+
+# HTTP client
+httpx==0.26.0
+
+# LLM APIs
+anthropic==0.18.0
+openai==1.12.0
+
+# OCR and document processing
+pytesseract==0.3.10
+pdf2image==1.16.3
+Pillow==10.2.0
+
+# Data validation
+pydantic==2.6.0
+
+# Environment variables
+python-dotenv==1.0.0
+
+# Database (future)
+# sqlalchemy==2.0.25
+# asyncpg==0.29.0
+# alembic==1.13.1
+
+# Graph processing (future)
+# networkx==3.2.1
+# neo4j==5.16.0
+
+# Blockchain (future)
+# web3==6.14.0
+# eth-account==0.10.0
+
+# Testing
+pytest==8.0.0
+pytest-asyncio==0.23.4
+httpx==0.26.0
+
+# Development
+black==24.1.1
+isort==5.13.2
+mypy==1.8.0
